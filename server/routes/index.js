@@ -5,7 +5,7 @@ var router = express.Router();
 var ruta_service = "";
 
 var connection = mysql.createConnection({
-  host     : '35.193.171.144', //34.125.102.235
+  host     : '35.193.171.144',
   database : 'cloud_service',
   user     : 'root',
   password : '1q2w3e4r',
