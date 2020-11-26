@@ -32,6 +32,15 @@ router.post('/post/contacto', (req,res)=>{
   });
 });
 
+// GET all the contacts from de database
+router.get('/get/contactos', (req,res)=>{
+  sql = "SELECT * FROM contactos;";
+  connection.query(sql, (err,rows)=>{
+    if(err) throw err;
+    res.status(200).json(rows);
+  });
+});
+
 // GET an XLSX file with all the contacts so far.
 router.get('/create/xlsx', (req,res)=>{
   let data = []
