@@ -41,6 +41,15 @@ router.get('/get/contactos', (req,res)=>{
   });
 });
 
+router.get('/get/contacto/:id', (req,res)=>{
+  let data = req.params;
+  sql = "SELECT * FROM contactos where id="+mysql.escape(data.id)+";";
+  connection.query(sql, (err,row) =>{
+    if(err) throw err;
+    res.status(200).json(row);
+  });
+});
+
 // GET an XLSX file with all the contacts so far.
 router.get('/create/xlsx', (req,res)=>{
   let data = []
@@ -66,6 +75,24 @@ router.get('/create/xlsx', (req,res)=>{
       }).catch(err=>{
         res.status(500).json(err);
       });
+  });
+});
+
+router.post('/update', (req,res)=>{
+  let data = req.body;
+  sql = "UPDATE contactos SET nombre = " +mysql.escape(data.nuevo_nombre) + ", telefono = "+ mysql.escape(data.nuevo_telefono)+" WHERE id = " +mysql.escape(data.id)+";";
+  connection.query(sql, (err,rows)=>{
+    if(err) throw err;
+    res.status(200).json({message: "¡Contacto actualizado!"});
+  });
+});
+
+router.post('/delete', (req, res) =>{
+  let data = req.body;
+  sql = "DELETE from contactos where id = "+mysql.escape(data.id)+";";
+  connection.query(sql, (err,rows)=>{
+    if(err) throw err;
+    res.status(200).json({message:"¡Contacto eliminado!"});
   });
 });
 
